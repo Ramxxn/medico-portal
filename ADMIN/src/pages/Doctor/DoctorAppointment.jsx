@@ -14,7 +14,7 @@ const DoctorAppointment = () => {
   }, [docToken]);
 
   return (
-    <div className='w-full max-w-6xl m-8'>
+    <div className='w-full max-w-7xl mx-auto m-5'>
       <h2 className='mb-3 text-lg font-medium'>My Appointments</h2>
       <div className='bg-white border shadow-md rounded-md text-sm max-h-[80vh] min-h-[65vh] overflow-y-scroll'>
         <div className='hidden sm:grid text-center grid-cols-[0.5fr_3fr_2fr_1fr_2.5fr_1fr_1fr] py-3 px-6 border-b'>

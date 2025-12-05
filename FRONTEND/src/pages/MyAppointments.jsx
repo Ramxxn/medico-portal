@@ -70,7 +70,7 @@ const MyAppointments = () => {
         {appointments.map((item, index) => (
           <div key={index} className="border rounded-2xl shadow-md p-4 flex flex-col sm:flex-row gap-4 relative">
             <div className="w-full sm:w-36 flex-shrink-0">
-              <img src={item.docData.image} alt="" className="w-40 h-36 object-cover object-center rounded-lg bg-primary mx-auto sm:mx-0" />
+              <img src={item.docData.image} alt="" className="w-40 h-36 object-contain rounded-lg bg-primary mx-auto sm:mx-0" />
             </div>
             <div className="flex-1">
               <p className="text-lg font-semibold">{item.docData.name}</p>
@@ -92,7 +92,7 @@ const MyAppointments = () => {
                 )}
 
                 {!item.cancelled && !item.payment && !item.isCompleted && (
-                  <button className="bg-lime-600 w-[200px] text-white px-2 py-1 rounded hover:bg-blue-600 transition">
+                  <button className="bg-lime-500 w-[200px] text-white px-2 py-1 rounded hover:bg-lime-700 transition">
                     Pay Online
                   </button>
                 )}
@@ -100,7 +100,7 @@ const MyAppointments = () => {
                 {!item.cancelled && !item.isCompleted && (
                   <button
                     onClick={() => cancelAppointment(item._id)}
-                    className="bg-lime-600 w-[200px] text-white px-2 py-1 rounded hover:bg-red-600 transition"
+                    className="bg-red-500 w-[200px] text-white px-2 py-1 rounded hover:bg-red-700 transition"
                   >Cancel Appointment
                   </button>
                 )}

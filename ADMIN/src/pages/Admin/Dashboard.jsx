@@ -13,7 +13,7 @@ const Dashboard = () => {
   }, [adminToken])
 
   return dashData && (
-    <div className=' m-8 p-1 md:p-2'>
+    <div className='w-full max-w-7xl m-5 p-1 md:p-2'>
 
       {/* Stats Cards */}
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>

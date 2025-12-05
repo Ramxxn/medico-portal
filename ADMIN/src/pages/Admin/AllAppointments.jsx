@@ -20,7 +20,7 @@ const AllAppointments = () => {
 
 
   return (
-    <div className='w-full max-w-6xl m-8'>
+    <div className='w-full max-w-7xl m-5'>
       <h2 className='mb-3 text-lg font-medium'>All Appointments</h2>
       <div className='bg-white border shadow-md rounded-md text-sm max-h-[80vh] min-h-[65vh] overflow-y-scroll'>
         <div className='hidden sm:grid text-center grid-cols-[0.5fr_3fr_1fr_3fr_3fr_1fr_1fr] grid-flow-col py-3 px-6 border-b'>
@@ -37,13 +37,13 @@ const AllAppointments = () => {
           <div className='flex flex-wrap justify-between items-center text-center max-sm:gap-2 sm:grid sm:grid-cols-[0.5fr_3fr_1fr_3fr_3fr_1fr_1fr] sm:place-items-center text-gray-500 py-3 px-5 border-b hover:bg-gray-50' key={index}>
             <p className='max-sm:hidden'>{index + 1}</p>
             <div className='flex justify-center items-center gap-2'>
-              <img className='w-10 h-10 rounded-full' src={item.userData.image} alt="" />
+              <img className='w-10 h-10 object-contain rounded-full' src={item.userData.image} alt="" />
               <p>{item.userData.name}</p>
             </div>
             <p>{calculateAge(item.userData.dob)}</p>
             <p>{item.slotDate}, {item.slotTime}</p>
             <div className='sm:grid sm:grid-cols-[1fr_4fr]'>
-              <img className='w-10 h-10 border rounded-full' src={item.docData.image} alt="" />
+              <img className='w-10 h-10 object-contain border rounded-full' src={item.docData.image} alt="" />
               <p>{item.docData.name}</p>
             </div>
             <p>{currencySymbol} {item.amount}</p>

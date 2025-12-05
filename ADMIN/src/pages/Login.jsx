@@ -26,7 +26,7 @@ export const Login = () => {
                 if (data.success) {
                     localStorage.setItem('adminToken', data.token)
                     setAdminToken(data.token);
-                    // optionally: navigate('/admin/dashboard')
+                    navigate('/admin-dashboard')
                 } else {
                     toast.error(data.message)
                 }
@@ -35,7 +35,7 @@ export const Login = () => {
                 if (data.success) {
                     localStorage.setItem('docToken', data.token)
                     setDocToken(data.token);
-                    navigate('/doctor/doctor-dashboard') // ✅ Redirect to correct route
+                    navigate('/doctor-dashboard') // ✅ Redirect to correct route
                 } else {
                     toast.error(data.message)
                 }
@@ -53,17 +53,17 @@ export const Login = () => {
                 </p>
                 <div className="space-y-4">
                     <input onChange={(e) => setEmail(e.target.value)} value={email} type="email" required placeholder='Email'
-                        className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:outline-none" />
+                        className="w-full px-4 py-2 border border-[#DADADA] rounded focus:outline-none" />
                     <input onChange={(e) => setPassword(e.target.value)} value={password} type="password" required placeholder='Password'
-                        className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:outline-none" />
+                        className="w-full px-4 py-2 border border-[#DADADA] rounded focus:outline-none" />
                     <button type='submit'
-                        className="w-full bg-primary text-white py-2 rounded-md hover:bg-blue-700 transition">
+                        className="w-full bg-lime-600 text-white py-2 rounded hover:scale-105 transition">
                         Login
                     </button>
                     {
                         state === "Admin"
-                            ? <p className='text-sm'>Doctor Login? <span className='underline text-primary cursor-pointer' onClick={() => setState('Doctor')}>Click here</span></p>
-                            : <p className='text-sm'>Admin Login? <span className='underline text-primary cursor-pointer' onClick={() => setState('Admin')}>Click here</span></p>
+                            ? <p className='text-sm'>Doctor Login? <span className='underline text-blue-950 cursor-pointer' onClick={() => setState('Doctor')}>Click here</span></p>
+                            : <p className='text-sm'>Admin Login? <span className='underline text-blue-950 cursor-pointer' onClick={() => setState('Admin')}>Click here</span></p>
                     }
                 </div>
             </div>

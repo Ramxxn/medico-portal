@@ -7,10 +7,12 @@
 
 
 * {
-  font-family: Outfit;
+  font-family: Outfit, sans-serif, Arial, Helvetica;
 }
 
-
+::-webkit-scrollbar {
+  width: 2px;
+}
 
 .active hr {
   @apply block;
@@ -56,3 +58,4 @@ background: linear-gradient(
   scrollbar-width: none;
   /* Firefox */
 }
+

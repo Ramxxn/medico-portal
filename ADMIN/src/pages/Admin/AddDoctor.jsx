@@ -13,7 +13,7 @@ const AddDoctor = () => {
   const [experiance, setExperiance] = useState('1 Year')
   const [fees, setFees] = useState('')
   const [about, setAbout] = useState('')
-  const [speciality, setSpeciality] = useState('Psychologist')
+  const [speciality, setSpeciality] = useState('General Physician (GP)')
   const [degree, setDegree] = useState('')
   const [address1, setAddress1] = useState('')
   const [address2, setAddress2] = useState('')
@@ -75,13 +75,13 @@ const AddDoctor = () => {
 
 
   return (
-    <form onSubmit={onSubmitHandler} className='m-8 w-full'>
-      <p className='mx-2 mb-3 text-lg text-lime-600 font-bold'>Add Doctor</p>
+    <form onSubmit={onSubmitHandler} className='m-5 h-full w-full max-w-7xl'>
+      <p className='mx-2 mb-3 text-lg font-medium'>Add Doctor</p>
 
-      <div className='bg-white px-8 py-8 border rounded w-full max-w-5xl max-h-[75vh] overflow-y-scroll'>
+      <div className='bg-white px-8 py-8 border rounded w-full max-h-[75vh] overflow-y-scroll'>
         <div className='flex items-center gap-4 mb-8 text-gray-500' >
           <label htmlFor="doc-img">
-            <img className='w-[100px] bg-gray-100 rounded-full cursor-pointer' src={docImg ? URL.createObjectURL(docImg) : assets.upload_area} alt="" />
+            <img className='w-[120px] h-[120px] object-contain bg-gray-100 rounded-full cursor-pointer' src={docImg ? URL.createObjectURL(docImg) : assets.upload_area} alt="" />
           </label>
           <input onChange={(e) => setDocImg(e.target.files[0])} className='border rounded px-3 py-2' type="file" id='doc-img' hidden />
           <p>Upload doctor <br /> picture</p>
@@ -116,10 +116,13 @@ const AddDoctor = () => {
                 <option value="8 Year">8 Year</option>
                 <option value="9 Year">9 Year</option>
                 <option value="10 Year">10 Year</option>
+                <option value="11 Year">11 Year</option>
+                <option value="12 Year">12 Year</option>
+                <option value="12 Year">More than 12 Year</option>
               </select>
             </div>
             <div className='flex-1 flex flex-col gap-1' >
-              <p>Fees</p>
+              <p>Fees (In INR)</p>
               <input onChange={(e) => setFees(e.target.value)} value={fees} className='border rounded px-3 py-2' type="number" placeholder='fees' required />
             </div>
 
@@ -130,12 +133,15 @@ const AddDoctor = () => {
             <div className='flex-1 flex flex-col gap-1' >
               <p>Speciality</p>
               <select onChange={(e) => setSpeciality(e.target.value)} value={speciality} >
+                <option value="General Physician (GP)">General Physician (GP)</option>
                 <option value="Psychologist">Psychologist</option>
                 <option value="Yogatherapist">Yogatherapist</option>
                 <option value="Physiotherapist">Physiotherapist</option>
                 <option value="Ayurvedacharya">Ayurvedacharya</option>
                 <option value="Naturopath">Naturopath</option>
                 <option value="Homeopath">Homeopath</option>
+                <option value="Pediatrician (Child Specialist)">Pediatrician (Child Specialist)</option>
+                <option value="Other">Other</option>
               </select>
             </div>
             <div className='flex-1 flex flex-col gap-1'>

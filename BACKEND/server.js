@@ -19,7 +19,6 @@ import userRouter from './routes/userRoute.js'
 // <------app config------->
 const app = express()
 const port = process.env.PORT || 3000
-connectDB()
 connectClodinary()
 
 
@@ -43,5 +42,6 @@ app.get('/', (req, res) => {
 
 
 app.listen(port, () => {
+  connectDB()
   console.log(`server started ${port}`)
 })

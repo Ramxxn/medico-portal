@@ -3,13 +3,14 @@ import admin_logo from './images/admin_logo.avif'
 import appointment_icon from './images/appointment_icon.svg'
 import cancel_icon from './images/cancel_icon.svg'
 import doctor_icon from './images/doctor_icon.png'
-import home_icon from './images/dash_board.png'
+import home_icon from './images/dashboards.png'
+import menu_icon from './images/menu.png'
 import people_icon from './images/people_icon.svg'
 import upload_area from './images/upload_area.svg'
 import list_icon from './images/lists_icon.gif'
 import tick_icon from './images/tick_icon.svg'
 import appointments_icon from './images/appointment_icon.png'
-import earning_icon from './images/earning_icon.svg'
+import earning_icon from './images/money_icon.png'
 import patients_icon from './images/patients_icon.png'
 
 export const assets = {
@@ -25,5 +26,6 @@ export const assets = {
     list_icon,
     tick_icon,
     appointments_icon,
-    earning_icon
+    earning_icon,
+    menu_icon
 }

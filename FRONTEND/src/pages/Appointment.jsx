@@ -127,10 +127,10 @@ const Appointment = () => {
 
 
   return docInfo && (
-    <div className="p-4 sm:p-6">
+    <div className="p-4 sm:p-6 h-full">
       {/* Doctor Info */}
       <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start">
-        <img className="w-40 h-40 sm:w-72 sm:h-72 object-cover object-center rounded-md bg-primary" src={docInfo.image} alt="" />
+        <img className="w-64 h-80 object-contain rounded-md bg-primary" src={docInfo.image} alt="" />
         <div className="flex-1 border border-gray-300 bg-white p-6 rounded-md shadow-sm w-full">
           <div className="flex items-center gap-2 text-xl sm:text-2xl font-semibold text-gray-900">
             {docInfo.name}
@@ -151,14 +151,14 @@ const Appointment = () => {
       </div>
 
       {/* Slots */}
-      <div className="w-full mt-8 flex flex-col items-center text-center">
+      <div className="max-w-2xl mx-auto mt-8 p-2 flex flex-col items-center text-center">
         <p className="font-medium text-gray-800 text-base mb-2">Booking Slots</p>
-        <div className="flex gap-3 pb-4">
+        <div className="flex gap-3 pb-4 w-full overflow-x-auto">
           {docSlots.length && docSlots.map((item, index) => (
             <div
               key={index}
               onClick={() => setSlotIndex(index)}
-              className={`min-w-16 text-center py-4 px-3 rounded-lg cursor-pointer text-sm font-medium 
+              className={`text-center py-2 px-3 rounded cursor-pointer text-sm font-medium 
                 ${slotIndex === index ? 'bg-btn text-white' : 'border border-gray-300 text-gray-700'}`}
             >
               <p>{item[0] && daysOfWeek[item[0].dateTime.getDay()]}</p>

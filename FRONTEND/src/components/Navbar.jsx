@@ -27,6 +27,7 @@ const Navbar = () => {
       <img onClick={() => { navigate('/') }} className='w-[200px] cursor-pointer' src={assets.logo} alt="" />
 
       <ul className='hidden md:flex gap-4 items-start font-medium'>
+        
         <NavLink to={"/"}>
           <li className='py-1'>HOME</li>
           <hr className='border-none outline-none h-0.5 bg-btn w-3/5 m-auto hidden' />
@@ -43,6 +44,13 @@ const Navbar = () => {
           <li className='py-1'>CONTACT</li>
           <hr className='border-none outline-none h-0.5 bg-btn w-3/5 m-auto hidden' />
         </NavLink>
+        <button className='border-lime-600 rounded-lg bg-lime-500 hover:scale-105 text-white border-2 px-4'>
+        <NavLink onClick={() => window.location.href = "http://localhost:5174/"}>
+          <li className='py-1'>Staff Panel</li>
+        </NavLink>
+        </button>
+
+
       </ul>
 
       <div className='flex gap-4 items-center'>
@@ -75,7 +83,8 @@ const Navbar = () => {
             <img className='w-36' src={assets.logo} alt="" />
             <img className='w-8' onClick={() => setShowMenu(false)} src={assets.cross_icon} alt="" />
           </div>
-          <ul className='flex flex-col gap-2 mt-5 px-5 text-xl font-medium'>
+          <ul className='flex flex-col gap-2 mt-5 px-5 text-sm md:text-xl font-medium'>
+            <NavLink onClick={() => setShowMenu(false)} to='/'> <p className='px-4 py-2 rounded-md inline-block w-full'   >Staff Panel</p></NavLink>
             <NavLink onClick={() => setShowMenu(false)} to='/'> <p className='px-4 py-2 rounded-md inline-block w-full'   >HOME</p></NavLink>
             <NavLink onClick={() => setShowMenu(false)} to='/doctors'> <p className='px-4 py-2 rounded-md inline-block w-full'   >ALL DOCTORS</p></NavLink>
             <NavLink onClick={() => setShowMenu(false)} to='/about'> <p className='px-4 py-2 rounded-md inline-block w-full'   >ABOUT</p></NavLink>

@@ -29,7 +29,6 @@ const DoctorProfile = () => {
 
     } catch (error) {
       toast.error(error.message)
-      console.log(error);
     }
   }
 
@@ -38,10 +37,10 @@ const DoctorProfile = () => {
   }, [docToken]);
 
   return profileData && (
-    <div className="max-w-4xl m-5 p-6 bg-white rounded-xl shadow-md">
+    <div className="max-w-7xl mx-auto max-h-screen m-5 p-6 bg-white rounded-xl shadow-md">
       <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
         <div className="shrink-0">
-          <img src={profileData.image} alt="" className="w-44 h-44 rounded-md bg-primary object-cover shadow" />
+          <img src={profileData.image} alt="" className="w-52 h-56 rounded-md  bg-lime-600 object-contain shadow" />
         </div>
 
         <div className="flex-1 space-y-4">

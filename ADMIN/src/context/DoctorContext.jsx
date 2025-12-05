@@ -39,7 +39,6 @@ const DoctorContextProvider = (props) => {
                 toast.error(data.message)
             }
         } catch (error) {
-            console.log(error);
             toast.error(error.message)
         }
     }
@@ -56,7 +55,6 @@ const DoctorContextProvider = (props) => {
                 toast.error(data.message)
             }
         } catch (error) {
-            console.log(error);
             toast.error(error.message)
         }
     }
@@ -69,8 +67,6 @@ const DoctorContextProvider = (props) => {
             if (data.success) {
                 toast.success(data.message)
                 setDashData(data.dashData)
-                console.log(data.dashData);
-
             } else {
                 toast.error(data.message)
             }
@@ -85,14 +81,11 @@ const DoctorContextProvider = (props) => {
         try {
             const { data } = await axios.get(backendUrl + '/api/doctor/profile', { headers: { docToken } })
             if (data.success) {
-                setProfileData(data.profileData)
-                console.log(data.profileData);
-                
+                setProfileData(data.profileData)                
             } else {
                 toast.error(data.message)
             }
         } catch (error) {
-            console.log(error);
             toast.error(error.message)
         }
     }
