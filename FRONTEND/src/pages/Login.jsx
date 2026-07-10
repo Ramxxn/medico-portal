@@ -1,80 +1,101 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { AppContext } from '../context/AppContext'
 import axios from 'axios'
 import { toast } from 'react-toastify'
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-
+import { useNavigate, Link } from 'react-router-dom'
+import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi'
 
 const Login = () => {
-
   const { backendUrl, token, setToken } = useContext(AppContext)
   const navigate = useNavigate()
+  const [state, setState] = useState('Sign Up')
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [showPass, setShowPass] = useState(false)
 
-  const [state, setState] = useState("Sign Up")
-
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [name, setName] = useState("")
-
-
-  const onSubmitHandler = async (event) => {
-    event.preventDefault()
+  const onSubmitHandler = async e => {
+    e.preventDefault()
+    setLoading(true)
     try {
-      if (state === "Sign Up") {
-        const { data } = await axios.post(backendUrl + '/api/user/register', { name, password, email })
-        if (data.success) {
-          localStorage.setItem('token', data.token)
-          setToken(data.token)
-        } else {
-          toast.error(data.message)
-        }
-      }else{
-         const { data } = await axios.post(backendUrl + '/api/user/login', {password, email })
-        if (data.success) {
-          localStorage.setItem('token', data.token)
-          setToken(data.token)
-        } else {
-          toast.error(data.message)
-        }
+      const endpoint = state === 'Sign Up' ? '/api/user/register' : '/api/user/login'
+      const payload = state === 'Sign Up' ? { name, password, email } : { password, email }
+      const { data } = await axios.post(backendUrl + endpoint, payload)
+      if (data.success) {
+        localStorage.setItem('token', data.token)
+        setToken(data.token)
+      } else {
+        toast.error(data.message)
       }
     } catch (error) {
       toast.error(error.message)
+    } finally {
+      setLoading(false)
     }
-
   }
 
-
-  useEffect(() => {
-  if (token) {
-    navigate('/')
-  }
-  }, [token])
-  
+  useEffect(() => { if (token) navigate('/') }, [token])
 
   return (
-    <form onSubmit={onSubmitHandler} className='min-h-[80vh] max-w-7xl flex items-center' action="">
-      <div className='flex flex-col gap-3 mx-auto items-start p-5 sm:min-w-[28rem] border rounded text-zinc-600 text-sm shadow-md'>
-        <p className='text-2xl font-semibold'>{state === "Sign Up" ? "Create Account" : "Login"}</p>
-        <p>Please {state === "Sign Up" ? "sign up" : "Log in"} to book appointment</p>
+    <div className='min-h-[80vh] flex items-center justify-center py-12 page'>
+      <div className='w-full max-w-md'>
+        <div className='card p-8'>
+          <div className='text-center mb-8'>
+            <h1 className='text-2xl font-bold text-text-primary'>
+              {state === 'Sign Up' ? 'Create your account' : 'Welcome back'}
+            </h1>
+            <p className='text-text-secondary text-sm mt-2'>
+              {state === 'Sign Up'
+                ? 'Join ICRB to book appointments with certified practitioners'
+                : 'Sign in to manage your appointments and profile'}
+            </p>
+          </div>
 
-        <div className='flex flex-col w-full gap-6'>
-          {
-            state === "Sign Up" && <input className='px-4 py-2 text-sm font-medium focus:outline-none border border-zinc-300' onChange={(e) => setName(e.target.value)} value={name} placeholder='Full Name' type="text" required />
-          }
+          <form onSubmit={onSubmitHandler} className='space-y-4'>
+            {state === 'Sign Up' && (
+              <div>
+                <label className='label'>Full Name</label>
+                <input type='text' value={name} onChange={e => setName(e.target.value)} placeholder='Your full name' required className='input' />
+              </div>
+            )}
+            <div>
+              <label className='label'>Email Address</label>
+              <input type='email' value={email} onChange={e => setEmail(e.target.value)} placeholder='your@email.com' required className='input' />
+            </div>
+            <div>
+              <label className='label'>Password</label>
+              <div className='relative'>
+                <input
+                  type={showPass ? 'text' : 'password'}
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  placeholder='Minimum 8 characters'
+                  required
+                  className='input pr-10'
+                />
+                <button type='button' onClick={() => setShowPass(p => !p)} className='absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-secondary'>
+                  {showPass ? <HiOutlineEyeOff className='w-4 h-4' /> : <HiOutlineEye className='w-4 h-4' />}
+                </button>
+              </div>
+            </div>
+            <button type='submit' disabled={loading} className='btn-primary w-full mt-2'>
+              {loading ? 'Please wait...' : state === 'Sign Up' ? 'Create Account' : 'Sign In'}
+            </button>
+          </form>
 
-          <input className='px-4 py-2 text-sm font-medium focus:outline-none border border-zinc-300' onChange={(e) => setEmail(e.target.value)} value={email} placeholder='Email' type="email" required />
-          <input className='px-4 py-2 text-sm font-medium focus:outline-none border border-zinc-300' onChange={(e) => setPassword(e.target.value)} value={password} placeholder='Password' type="password" required />
-          <button type='submit' className='bg-lime-600 w-full px-4 py-2 rounded-md text-white text-base'>{state === "Sign Up" ? "Create Account" : "Login"}</button>
-
-          {
-            state === "Sign Up"
-              ? <p>Already have an account? <span onClick={() => setState("Login")} className='text-primary underline cursor-pointer'>Sign In</span> </p>
-              : <p>Create an new account? <span onClick={() => setState("Sign Up")} className='text-primary underline cursor-pointer'>Sign Up</span> </p>
-          }
+          <div className='mt-6 text-center'>
+            {state === 'Sign Up'
+              ? <p className='text-sm text-text-secondary'>Already have an account? <button onClick={() => setState('Login')} className='text-primary font-medium hover:underline'>Sign In</button></p>
+              : <p className='text-sm text-text-secondary'>Don't have an account? <button onClick={() => setState('Sign Up')} className='text-primary font-medium hover:underline'>Create one</button></p>
+            }
+          </div>
         </div>
+        <p className='text-center text-xs text-text-muted mt-4'>
+          By continuing, you agree to our <Link to='/terms' className='text-primary hover:underline'>Terms</Link> and <Link to='/privacy-policy' className='text-primary hover:underline'>Privacy Policy</Link>
+        </p>
       </div>
-    </form>
+    </div>
   )
 }
 

@@ -1,92 +1,79 @@
-import React from 'react'
-import { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { DoctorContext } from '../../context/DoctorContext'
-import { assets } from '../../assets/assets'
-import { useEffect } from 'react'
 import { AppContext } from '../../context/AppContext'
+import { HiOutlineCalendar, HiOutlineCurrencyRupee, HiOutlineUsers } from 'react-icons/hi'
+
+const StatCard = ({ icon: Icon, value, label }) => (
+  <div className='card p-5 flex items-center gap-4 hover:shadow-card-hover transition-shadow'>
+    <div className='w-11 h-11 rounded-xl bg-bg-card flex items-center justify-center flex-shrink-0'>
+      <Icon className='w-5 h-5 text-primary-dk' />
+    </div>
+    <div>
+      <p className='text-2xl font-bold text-tx-1'>{value}</p>
+      <p className='text-sm text-tx-4'>{label}</p>
+    </div>
+  </div>
+)
 
 const DoctorDashboard = () => {
-  const { docToken, dashData, setDashData, getDashData, cancelAppointment, completeAppointment } = useContext(DoctorContext)
+  const { docToken, dashData, getDashData, cancelAppointment, completeAppointment } = useContext(DoctorContext)
   const { currencySymbol } = useContext(AppContext)
 
-  useEffect(() => {
+  useEffect(() => { if (docToken) getDashData() }, [docToken])
 
-    if (docToken) {
-      getDashData()
-    }
-  }, [docToken])
+  if (!dashData) return (
+    <div className='flex-1 flex items-center justify-center min-h-screen bg-bg-page'>
+      <div className='w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin'></div>
+    </div>
+  )
 
-
-
-  return dashData && (
-    <div className='w-full max-w-7xl mx-auto m-5'>
-
-      {/* Stats Cards */}
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
-        <div className='flex items-center gap-4 bg-white p-4 rounded-xl border shadow-sm hover:scale-105 transition-transform'>
-          <img className='w-14' src={assets.earning_icon} alt="Doctors" />
-          <div>
-            <p className='text-xl font-bold text-gray-700'> {currencySymbol} {dashData.earnings}</p>
-            <p className='text-sm text-gray-400'>Earnings</p>
-          </div>
-        </div>
-
-        <div className='flex items-center gap-4 bg-white p-4 rounded-xl border shadow-sm hover:scale-105 transition-transform'>
-          <img className='w-14' src={assets.appointments_icon} alt="Appointments" />
-          <div>
-            <p className='text-xl font-bold text-gray-700'>{dashData.appointments}</p>
-            <p className='text-sm text-gray-400'>Appointments</p>
-          </div>
-        </div>
-
-        <div className='flex items-center gap-4 bg-white p-4 rounded-xl border shadow-sm hover:scale-105 transition-transform'>
-          <img className='w-12' src={assets.patients_icon} alt="Patients" />
-          <div>
-            <p className='text-xl font-bold text-gray-700'>{dashData.patients}</p>
-            <p className='text-sm text-gray-400'>Patients</p>
-          </div>
-        </div>
+  return (
+    <div className='flex-1 p-6 bg-bg-page min-h-screen'>
+      <div className='mb-6'>
+        <h1 className='text-xl font-bold text-tx-1'>My Dashboard</h1>
+        <p className='text-tx-4 text-sm mt-0.5'>Your practice overview</p>
       </div>
 
+      <div className='grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8'>
+        <StatCard icon={HiOutlineCurrencyRupee} value={`${currencySymbol}${dashData.earnings}`} label='Total Earnings' />
+        <StatCard icon={HiOutlineCalendar} value={dashData.appointments} label='Total Appointments' />
+        <StatCard icon={HiOutlineUsers} value={dashData.patients} label='Unique Patients' />
+      </div>
 
-
-
-      {/* Latest Bookings */}
-      <div className='mt-10'>
-        <div className='flex items-center gap-3 px-4 py-3 rounded-t-lg bg-white border border-b-0 shadow-sm'>
-          <img src={assets.list_icon} alt="Bookings" className='w-6' />
-          <p className='font-semibold text-gray-700 text-lg'>Latest Bookings</p>
+      <div className='card overflow-hidden'>
+        <div className='flex items-center gap-3 px-5 py-4 border-b border-border bg-bg-page'>
+          <HiOutlineCalendar className='w-4 h-4 text-primary' />
+          <h2 className='font-semibold text-tx-1 text-sm'>Latest Appointments</h2>
         </div>
 
-        <div className='border border-t-0 bg-white rounded-b-lg shadow-sm'>
-          {
-            dashData.latestAppointment.map((item, index) => (
-              <div key={index} className='flex items-center justify-between gap-4 p-4 border-t flex-wrap sm:flex-nowrap'>
-                <div className='flex items-center gap-4'>
-                  <img src={item.userData.image} alt="Doctor" className='w-14 h-14 object-cover rounded-full border' />
+        {dashData.latestAppointment.length === 0 ? (
+          <div className='text-center py-12 text-tx-4 text-sm'>No appointments yet</div>
+        ) : (
+          <div className='divide-y divide-border'>
+            {dashData.latestAppointment.map((item, i) => (
+              <div key={i} className='flex items-center justify-between gap-4 px-5 py-4 hover:bg-bg-page transition-colors'>
+                <div className='flex items-center gap-3'>
+                  <img src={item.userData.image} alt='' className='w-9 h-9 object-cover rounded-full border border-border' />
                   <div>
-                    <p className='font-medium text-gray-700'>{item.userData.name}</p>
-                    <p className='text-sm text-gray-500'>{item.slotDate}</p>
+                    <p className='font-medium text-tx-1 text-sm'>{item.userData.name}</p>
+                    <p className='text-xs text-tx-4'>{item.slotDate} · {item.slotTime}</p>
                   </div>
                 </div>
-                <div className='w-1/6'>
+                <div className='flex gap-2'>
                   {item.cancelled
-                    ? <span className='font-medium text-red-600'>Cancelled</span>
+                    ? <span className='badge-error'>Cancelled</span>
                     : item.isCompleted
-                      ? <span className='font-medium text-green-600'>Completed</span>
-                      : <div className="flex gap-2 justify-center items-center">
-                        <img onClick={() => cancelAppointment(item._id)} className='w-10 cursor-pointer' src={assets.cancel_icon} alt="cancel" />
-                        <img onClick={() => completeAppointment(item._id)} className='w-10 cursor-pointer' src={assets.tick_icon} alt="tick" />
-                      </div>
+                      ? <span className='badge-success'>Completed</span>
+                      : <>
+                          <button onClick={() => cancelAppointment(item._id)} className='btn-danger text-xs px-3 py-1.5'>Cancel</button>
+                          <button onClick={() => completeAppointment(item._id)} className='btn-outline text-xs px-3 py-1.5'>Complete</button>
+                        </>
                   }
-
                 </div>
-
-
               </div>
-            ))
-          }
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )

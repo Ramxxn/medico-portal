@@ -1,48 +1,48 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-import { AppContext } from '../context/AppContext';
+import { useNavigate } from 'react-router-dom'
+import { AppContext } from '../context/AppContext'
 
 const RelatedDoctor = ({ docId, speciality }) => {
+  const { doctors } = useContext(AppContext)
+  const navigate = useNavigate()
+  const [relDoc, setRelDoc] = useState([])
 
+  useEffect(() => {
+    if (doctors.length > 0)
+      setRelDoc(doctors.filter(d => d.speciality.toLowerCase() === speciality.toLowerCase() && d._id !== docId))
+  }, [docId, speciality, doctors])
 
-    const { doctors } = useContext(AppContext);
-    const navigate = useNavigate()
+  if (!relDoc.length) return null
 
-    const [relDoc, setRelDoc] = useState([])
-
-
-    useEffect(() => {
-        if (doctors.length > 0) {
-            const doctorData = doctors.filter((item) => item.speciality.toLowerCase() === speciality.toLowerCase() && item._id !== docId);
-            setRelDoc(doctorData);
-
-        }
-    }, [docId, speciality, doctors])
-
-
-
-    return (
-        <div className='flex flex-col h-min items-center gap-4 rounded-md text-gray-900 my-16 md:mx-10'>
-            <h1 className='text-3xl font-medium'>Related Doctors to Book</h1>
-            <p className='sm:w-1/3 text-center text-sm '>According to your speciality India's trusted doctors.</p>
-            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full sm:px-0'>
-
-                {relDoc.slice(0, 5).map((item, index) => (
-                    <div onClick={() => { navigate(`/appointment/${item._id}`); scrollTo(0, 0) }} className='border border-t-4 w-72 md:w-56 h-64 rounded-lg overflow-hidden cursor-pointer group' key={index}>
-                        <img className='bg-green-50 h-3/5 w-full object-contain group-hover:scale-105 transition-all duration-500' src={item.image} alt="" />
-                        <div className='p-4'>
-                            <div className={`flex items-center gap-2 text-sm text-center ${item.available ? 'text-green-700' : 'text-red-700'}`}>
-                                <p className={item.available ? 'w-2 h-2 bg-green-700 rounded-full' : 'w-2 h-2 bg-red-700 rounded-full'}></p><p> {item.available ? "Available" : "UnAvailable"} </p>
-                            </div>
-                            <p className='text-gray-900 text-lg font-medium'>{item.name}</p>
-                            <p className='text-gray-600 text-sm'>{item.speciality}</p>
-                        </div>
-                    </div>
-                ))}
+  return (
+    <section className='py-14'>
+      <div className='mb-8'>
+        <p className='section-label mb-1.5'>Similar Practitioners</p>
+        <h2 className='text-2xl font-bold text-text-primary'>Related Practitioners</h2>
+      </div>
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4'>
+        {relDoc.slice(0, 5).map(item => (
+          <div
+            key={item._id}
+            onClick={() => { navigate(`/appointment/${item._id}`); scrollTo(0, 0) }}
+            className='card-hover cursor-pointer overflow-hidden group'
+          >
+            <div className='bg-surface-2 h-40 flex items-end justify-center overflow-hidden'>
+              <img className='h-full w-full object-contain group-hover:scale-105 transition-transform duration-500' src={item.image} alt={item.name} loading='lazy' />
             </div>
-            <button onClick={() => { navigate(`/doctors`); scrollTo(0, 0) }} className='bg-green-100 text-gray-600 px-12 py-3 rounded-md mt-10'>more</button>
-        </div>
-    )
+            <div className='p-3'>
+              <div className={`flex items-center gap-1.5 text-xs font-medium mb-1 ${item.available ? 'text-success' : 'text-error'}`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${item.available ? 'bg-success' : 'bg-error'}`}></span>
+                {item.available ? 'Available' : 'Unavailable'}
+              </div>
+              <p className='font-semibold text-text-primary text-sm'>{item.name}</p>
+              <p className='text-text-muted text-xs mt-0.5'>{item.speciality}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
 }
 
 export default RelatedDoctor

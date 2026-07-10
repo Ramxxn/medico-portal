@@ -1,129 +1,122 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { DoctorContext } from '../../context/DoctorContext';
-import { AppContext } from '../../context/AppContext';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import React, { useContext, useEffect, useState } from 'react'
+import { DoctorContext } from '../../context/DoctorContext'
+import { AppContext } from '../../context/AppContext'
+import axios from 'axios'
+import { toast } from 'react-toastify'
+import { HiOutlineBadgeCheck, HiOutlineLocationMarker, HiOutlineCurrencyRupee } from 'react-icons/hi'
 
 const DoctorProfile = () => {
-  const { docToken, profileData, setProfileData, getDoctorProfileData, backendUrl } = useContext(DoctorContext);
-  const { currencySymbol } = useContext(AppContext);
-  const [isEdit, setIsEdit] = useState(false);
+  const { docToken, profileData, setProfileData, getDoctorProfileData, backendUrl } = useContext(DoctorContext)
+  const { currencySymbol } = useContext(AppContext)
+  const [isEdit, setIsEdit] = useState(false)
 
+  useEffect(() => { if (docToken) getDoctorProfileData() }, [docToken])
 
   const updateProfile = async () => {
     try {
-      const updateData = {
-        address: profileData.address,
-        fees: profileData.fees,
-        available: profileData.available
-      }
-
-      const {data} = await axios.post(backendUrl + '/api/doctor/update-profile',updateData, {headers: {docToken}})
-      if (data.success) {
-        toast.success(data.message)
-        setIsEdit(false)
-        getDoctorProfileData()
-      }else{
-        toast.error(data.message)
-      }
-
-    } catch (error) {
-      toast.error(error.message)
-    }
+      const { data } = await axios.post(
+        backendUrl + '/api/doctor/update-profile',
+        { address: profileData.address, fees: profileData.fees, available: profileData.available },
+        { headers: { docToken } }
+      )
+      if (data.success) { toast.success('Profile updated'); setIsEdit(false); getDoctorProfileData() }
+      else toast.error(data.message)
+    } catch (err) { toast.error(err.message) }
   }
 
-  useEffect(() => {
-    if (docToken) getDoctorProfileData();
-  }, [docToken]);
+  if (!profileData) return (
+    <div className='flex-1 flex items-center justify-center min-h-screen bg-bg-page'>
+      <div className='w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin'></div>
+    </div>
+  )
 
-  return profileData && (
-    <div className="max-w-7xl mx-auto max-h-screen m-5 p-6 bg-white rounded-xl shadow-md">
-      <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-        <div className="shrink-0">
-          <img src={profileData.image} alt="" className="w-52 h-56 rounded-md  bg-lime-600 object-contain shadow" />
+  return (
+    <div className='flex-1 p-6 bg-bg-page min-h-screen'>
+      <div className='mb-6'>
+        <h1 className='text-xl font-bold text-tx-1'>My Profile</h1>
+        <p className='text-tx-4 text-sm mt-0.5'>Manage your practitioner profile</p>
+      </div>
+
+      <div className='card max-w-3xl overflow-hidden'>
+        {/* Header */}
+        <div className='bg-bg-card px-6 py-6 border-b border-border flex flex-col sm:flex-row items-center gap-5'>
+          <img src={profileData.image} alt='' className='w-24 h-28 rounded-xl bg-bg-page object-contain shadow-card' />
+          <div>
+            <div className='flex items-center gap-2 mb-1'>
+              <p className='text-xl font-bold text-tx-1'>{profileData.name}</p>
+              <HiOutlineBadgeCheck className='w-5 h-5 text-primary' />
+            </div>
+            <p className='text-tx-3 text-sm'>{profileData.degree} · {profileData.speciality}</p>
+            <span className='badge-primary mt-2 inline-block'>{profileData.experiance}</span>
+          </div>
         </div>
 
-        <div className="flex-1 space-y-4">
-          <p className="text-2xl font-bold text-gray-800">{profileData.name}</p>
-
-          <div className="text-gray-600">
-            <p className="text-lg">{profileData.degree} - {profileData.speciality}</p>
-            <button className="mt-1 px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded">{profileData.experiance}</button>
-          </div>
-
+        <div className='p-6 space-y-6'>
+          {/* About */}
           <div>
-            <p className="font-semibold text-gray-700">About:</p>
-            <p className="text-gray-600">{profileData.about}</p>
+            <p className='text-xs font-semibold text-tx-4 uppercase tracking-wider mb-2'>About</p>
+            <p className='text-sm text-tx-3 leading-relaxed'>{profileData.about}</p>
           </div>
 
-          <p className="text-gray-800 font-medium">
-            Appointment Fees: {currencySymbol}
+          <div className='divider'></div>
+
+          {/* Fees */}
+          <div className='flex items-center gap-2'>
+            <HiOutlineCurrencyRupee className='w-4 h-4 text-primary' />
+            <span className='text-sm text-tx-3'>Consultation Fee:</span>
+            {isEdit
+              ? <input type='number' className='input w-28 ml-1' value={profileData.fees}
+                  onChange={e => setProfileData(p => ({ ...p, fees: e.target.value }))} />
+              : <span className='font-bold text-tx-1 ml-1'>{currencySymbol}{profileData.fees}</span>
+            }
+          </div>
+
+          {/* Address */}
+          <div className='flex items-start gap-2'>
+            <HiOutlineLocationMarker className='w-4 h-4 text-primary mt-0.5 flex-shrink-0' />
+            <div className='flex-1'>
+              <p className='text-sm text-tx-3 mb-1'>Address</p>
+              {isEdit ? (
+                <div className='space-y-2'>
+                  <input className='input' value={profileData.address.line1}
+                    onChange={e => setProfileData(p => ({ ...p, address: { ...p.address, line1: e.target.value } }))} placeholder='Address line 1' />
+                  <input className='input' value={profileData.address.line2}
+                    onChange={e => setProfileData(p => ({ ...p, address: { ...p.address, line2: e.target.value } }))} placeholder='Address line 2' />
+                </div>
+              ) : (
+                <p className='text-sm text-tx-2'>{profileData.address.line1}{profileData.address.line2 && `, ${profileData.address.line2}`}</p>
+              )}
+            </div>
+          </div>
+
+          {/* Availability */}
+          <div className='flex items-center gap-3'>
+            <button
+              onClick={() => isEdit && setProfileData(p => ({ ...p, available: !p.available }))}
+              className={`relative w-10 h-5 rounded-full transition-colors ${isEdit ? 'cursor-pointer' : 'cursor-default'} ${profileData.available ? 'bg-primary' : 'bg-border-md'}`}
+            >
+              <span className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${profileData.available ? 'translate-x-5' : 'translate-x-0.5'}`}></span>
+            </button>
+            <span className={`text-sm font-medium ${profileData.available ? 'text-primary-dk' : 'text-tx-4'}`}>
+              {profileData.available ? 'Available for appointments' : 'Not available'}
+            </span>
+          </div>
+
+          {/* Actions */}
+          <div className='flex justify-end gap-3 pt-4 border-t border-border'>
             {isEdit ? (
-              <input
-                type="number"
-                className="border rounded px-3 py-1 w-28 ml-1"
-                onChange={(e) => setProfileData(prev => ({ ...prev, fees: e.target.value }))}
-                value={profileData.fees}
-              />
+              <>
+                <button onClick={() => { setIsEdit(false); getDoctorProfileData() }} className='btn-ghost'>Cancel</button>
+                <button onClick={updateProfile} className='btn-primary'>Save Changes</button>
+              </>
             ) : (
-              <span className="text-black ml-1">{profileData.fees}</span>
+              <button onClick={() => setIsEdit(true)} className='btn-outline'>Edit Profile</button>
             )}
-          </p>
-
-          <div className="text-gray-700">
-            <p className="font-semibold">Address:</p>
-            <p>
-              {isEdit ? (
-                <input
-                  type="text"
-                  className="border rounded px-3 w-full"
-                  onChange={(e) => setProfileData(prev => ({ ...prev, address: { ...prev.address, line1: e.target.value } }))}
-                  value={profileData.address.line1}
-                />
-              ) : profileData.address.line1}
-            </p>
-            <br />
-            <p>
-              {isEdit ? (
-                <input
-                  type="text"
-                  className="border rounded px-3 w-full"
-                  onChange={(e) => setProfileData(prev => ({ ...prev, address: { ...prev.address, line2: e.target.value } }))}
-                  value={profileData.address.line2}
-                />
-              ) : profileData.address.line2}
-            </p>
           </div>
-
-          <div className="flex items-center gap-2">
-            <input
-              onChange={() => isEdit && setProfileData(prev => ({ ...prev, available: !prev.available }))}
-              checked={profileData.available}
-              type="checkbox"
-              className="w-4 h-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
-            />
-            <label className="text-gray-700">Available</label>
-          </div>
-
-          {isEdit ? (
-            <button
-              onClick={updateProfile}
-              className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            >
-              Save
-            </button>
-          ) : (
-            <button
-              onClick={() => setIsEdit(true)}
-              className="mt-2 px-4 py-2 bg-zinc-600 text-white rounded hover:bg-zinc-700"
-            >
-              Edit
-            </button>
-          )}
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DoctorProfile;
+export default DoctorProfile

@@ -22,6 +22,7 @@ import Physiotherapist from './images/Physiotherapist.svg'
 import Ayurvedacharya  from './images/Ayurvedacharya.svg'
 import Naturopath from './images/Naturopath.svg'
 import Homeopath from './images/Homeopath.svg'
+import Pediatricians from './images/Pediatricians.svg'
 
 
 export const assets = {
@@ -46,28 +47,21 @@ export const assets = {
 }
 
 export const specialityData = [
-    {
-        speciality: 'Psychologist',
-        image: Psychologist
-    },
-    {
-        speciality: 'Yogatherapist',
-        image: Yogatherapist
-    },
-    {
-        speciality: 'Physiotherapist',
-        image: Physiotherapist
-    },
-    {
-        speciality: 'Ayurvedacharya',
-        image: Ayurvedacharya 
-    },
-    {
-        speciality: 'Naturopath',
-        image: Naturopath
-    },
-    {
-        speciality: 'Homeopath',
-        image: Homeopath
-    },
+    { speciality: 'Psychologist', image: Psychologist },
+    { speciality: 'Yogatherapist', image: Yogatherapist },
+    { speciality: 'Physiotherapist', image: Physiotherapist },
+    { speciality: 'Ayurvedacharya', image: Ayurvedacharya },
+    { speciality: 'Naturopath', image: Naturopath },
+    { speciality: 'Homeopath', image: Homeopath },
+    { speciality: 'Pediatrician (Child Specialist)', image: Pediatricians },
+]
+
+export const serviceData = [
+    { speciality: 'Ayurvedacharya', name: 'Ayurveda', image: Ayurvedacharya, desc: 'Ancient herbal healing & Prakriti-based treatment' },
+    { speciality: 'Yogatherapist', name: 'Yoga Therapy', image: Yogatherapist, desc: 'Therapeutic yoga for body-mind balance' },
+    { speciality: 'Naturopath', name: 'Naturopathy', image: Naturopath, desc: 'Holistic healing through nature-based therapies' },
+    { speciality: 'Homeopath', name: 'Homeopathy', image: Homeopath, desc: 'Gentle individualized natural medicine' },
+    { speciality: 'Psychologist', name: 'Psychology', image: Psychologist, desc: 'Mental health & emotional wellbeing support' },
+    { speciality: 'Physiotherapist', name: 'Physiotherapy', image: Physiotherapist, desc: 'Pain relief & physical rehabilitation' },
+    { speciality: 'Pediatrician (Child Specialist)', name: 'Pediatrics', image: Pediatricians, desc: 'Specialized natural care for children' },
 ]

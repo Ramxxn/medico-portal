@@ -1,29 +1,42 @@
 import React from 'react'
-import { assets } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
+import { assets } from '../assets/assets'
+import { HiOutlineArrowRight } from 'react-icons/hi'
 
 const Banner = () => {
-
-  const navigate = useNavigate();
-
+  const navigate = useNavigate()
   return (
-    <div className='flex bg-primary flex-col rounded-md gap-4 px-6 sm:px-10 md:px-14 lg:px-12 my-20 md:mx-10 text-gray-900 md:flex-row'>
-      {/* <-------left side banner--------> */}
-      <div className='w-1/2'>
-        <div className='flex flex-col py-8 sm:py-10 md:py-16 lg:py-24 lg:pl-5 gap-4 sm:text-2xl md:text-3xl lg:text-4xl text-white font-semibold text-center md:text-left'>
-          <p>Book Appointments with</p>
-          <p className='mt-2'>Certified Bio-Remedy Experts</p>
+    <section className='my-16 rounded-2xl hero-gradient overflow-hidden'>
+      <div className='flex flex-col md:flex-row items-center'>
+        <div className='md:w-3/5 px-8 md:px-14 lg:px-20 py-14 md:py-16'>
+          <p className='text-white/60 text-sm font-medium mb-3 uppercase tracking-wider'>Ready to start?</p>
+          <h2 className='text-3xl md:text-4xl font-bold text-white leading-tight'>
+            Book Appointments with<br />
+            <span className='text-secondary'>Certified Bio-Remedy Experts</span>
+          </h2>
+          <p className='text-white/65 mt-4 text-sm leading-relaxed max-w-md'>
+            Take the first step towards natural wellness. Our practitioners are verified, experienced, and ready to guide your healing journey.
+          </p>
+          <div className='flex flex-wrap gap-3 mt-8'>
+            <button
+              onClick={() => { navigate('/login'); scrollTo(0, 0) }}
+              className='inline-flex items-center gap-2 bg-white text-gray-900 font-semibold px-6 py-3 rounded-lg text-sm hover:bg-gray-100 transition-colors'
+            >
+              Create Free Account <HiOutlineArrowRight className='w-4 h-4' />
+            </button>
+            <button
+              onClick={() => { navigate('/doctors'); scrollTo(0, 0) }}
+              className='border border-white/30 text-white font-medium px-6 py-3 rounded-lg text-sm hover:bg-white/10 transition-colors'
+            >
+              Browse Practitioners
+            </button>
+          </div>
         </div>
-        <button onClick={() => { navigate('/login'); scrollTo(0, 0) }} className='bg-white text-sm sm:text-base rounded-md my-2 px-5 py-3 hover:scale-105 transition-all'>
-          Explore Remedies
-        </button>
+        <div className='md:w-2/5 flex justify-center md:justify-end relative h-48 md:h-auto'>
+          <img className='w-full max-w-xs md:max-w-sm object-contain md:absolute md:bottom-0' src={assets.appointment_img} alt='Book appointment' />
+        </div>
       </div>
-
-      {/* <-------right side banner-------> */}
-      <div className='lg:w-2/5 relative'>
-        <img className='w-full absolute bottom-0 right-0 max-w-md' src={assets.appointment_img} alt="" />
-      </div>
-    </div>
+    </section>
   )
 }
 
