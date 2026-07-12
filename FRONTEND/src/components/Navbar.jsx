@@ -18,6 +18,8 @@ const Navbar = () => {
   const { token, setToken, userData } = useContext(AppContext)
   const [showMenu, setShowMenu] = useState(false)
 
+  const STAFF_PANEL_URL = import.meta.env.VITE_STAFF_PANEL_URL || "http://localhost:5174";
+
   const logout = () => { setToken(false); localStorage.removeItem('token') }
 
   return (
@@ -30,12 +32,11 @@ const Navbar = () => {
             {NAV_LINKS.map(({ to, label }) => (
               <NavLink key={to} to={to}
                 className={({ isActive }) =>
-                  `px-3.5 py-2 text-sm font-medium rounded-lg transition-colors ${
-                    isActive ? 'text-primary-dk bg-bg-card' : 'text-tx-3 hover:text-tx-1 hover:bg-surface-3'
+                  `px-3.5 py-2 text-sm font-medium rounded-lg transition-colors ${isActive ? 'text-primary-dk bg-bg-card' : 'text-tx-3 hover:text-tx-1 hover:bg-surface-3'
                   }`
                 }>{label}</NavLink>
             ))}
-            <a href='http://localhost:5174/' className='ml-2 px-3.5 py-2 text-sm font-medium text-primary border border-primary rounded-lg hover:bg-bg-card transition-colors'>
+            <a href={STAFF_PANEL_URL} target='_blank' rel="noopener noreferrer" className='ml-2 px-3.5 py-2 text-sm font-medium text-primary border border-primary rounded-lg hover:bg-bg-card transition-colors'>
               Staff Panel
             </a>
           </nav>
@@ -90,7 +91,14 @@ const Navbar = () => {
                   `px-4 py-3 text-sm font-medium rounded-lg transition-colors ${isActive ? 'text-primary-dk bg-bg-card' : 'text-tx-3 hover:bg-surface-3 hover:text-tx-1'}`
                 }>{label}</NavLink>
             ))}
-            <a href='http://localhost:5174/' className='px-4 py-3 text-sm font-medium text-primary border border-primary rounded-lg mt-2 text-center'>Staff Panel</a>
+            <a
+              href={STAFF_PANEL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-3 text-sm font-medium text-primary border border-primary rounded-lg mt-2 text-center"
+            >
+              Staff Panel
+            </a>
             {!token && <button onClick={() => { navigate('/login'); setShowMenu(false) }} className='mt-2 btn-primary w-full'>Sign In</button>}
           </nav>
         </div>
