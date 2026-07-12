@@ -4,14 +4,15 @@ import { AdminContext } from '../context/AdminContext'
 import { DoctorContext } from '../context/DoctorContext'
 import {
   HiOutlineHome, HiOutlineCalendar, HiOutlinePlusCircle,
-  HiOutlineUserGroup, HiOutlineUser
+  HiOutlineUserGroup, HiOutlineUser, HiOutlineMail
 } from 'react-icons/hi'
 
 const ADMIN_LINKS = [
   { to: '/admin-dashboard', label: 'Dashboard', icon: HiOutlineHome },
-  { to: '/all-allappointments', label: 'Appointments', icon: HiOutlineCalendar },
+  { to: '/appointments', label: 'Appointments', icon: HiOutlineCalendar },
   { to: '/add-doctor', label: 'Add Practitioner', icon: HiOutlinePlusCircle },
   { to: '/doctor-list', label: 'Practitioners', icon: HiOutlineUserGroup },
+  { to: '/contact-requests', label: 'Support Requests', icon: HiOutlineMail },
 ]
 
 const DOCTOR_LINKS = [
@@ -37,7 +38,11 @@ const SidebarLink = ({ to, label, icon: Icon }) => (
 const Sidebar = () => {
   const { adminToken } = useContext(AdminContext)
   const { docToken } = useContext(DoctorContext)
-  const links = adminToken ? ADMIN_LINKS : DOCTOR_LINKS
+  const links = adminToken
+  ? ADMIN_LINKS
+  : docToken
+  ? DOCTOR_LINKS
+  : [];
 
   return (
     <aside className='w-14 md:w-56 min-h-[calc(100vh-64px)] bg-white border-r border-border flex-shrink-0'>

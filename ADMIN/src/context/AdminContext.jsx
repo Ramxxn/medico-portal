@@ -9,13 +9,14 @@ const AdminContextProvider = (props) => {
     const [adminToken, setAdminToken] = useState(localStorage.getItem('adminToken') || '')
     const [doctors, setdoctors] = useState([])
     const [appointmentList, setAppointmentList] = useState([])
+    const [contactUsList, setContactUsList] = useState([])
     const [dashData, setDashData] = useState(false)
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL
 
     const getAllDoctors = async () => {
         try {
-            const { data } = await axios.post(backendUrl + '/api/admin/all-doctors', {}, { headers: { adminToken } })
+            const { data } = await axios.post(backendUrl + '/api/admin/all-doctors', { headers: { adminToken } })
             if (data.success) {
 
                 setdoctors(data.doctors)
@@ -27,6 +28,72 @@ const AdminContextProvider = (props) => {
             toast.error(error.message)
         }
     }
+
+    const getContactUsRequest = async () => {
+        try {
+            const { data } = await axios.get(backendUrl + '/api/admin/all-contact-requests',{ headers: { adminToken } })
+            
+            if (data.success) {
+                
+                setContactUsList(data.contactUsList)
+                return true
+
+            } else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
+
+    const updateContactStatus = async (contactId, status) => {
+        try {
+
+            const { data } = await axios.post(
+                backendUrl + "/api/admin/update-contact-status",
+                { contactId, status },
+                {
+                    headers: { adminToken }
+                }
+            );
+
+            if (data.success) {
+                toast.success(data.message);
+                getContactUsRequest();
+            } else {
+                toast.error(data.message);
+            }
+
+        } catch (error) {
+            toast.error(error.message);
+        }
+    };
+
+
+    const deleteContactRequest = async (contactId) => {
+        try {
+
+            const { data } = await axios.post(
+                backendUrl + "/api/admin/delete-contact-request",
+                { contactId },
+                {
+                    headers: { adminToken }
+                }
+            );
+
+            if (data.success) {
+                toast.success(data.message);
+                getContactUsRequest();
+            } else {
+                toast.error(data.message);
+            }
+
+        } catch (error) {
+            toast.error(error.message);
+        }
+    };
+
 
     const changeAvailability = async (docId) => {
         try {
@@ -41,6 +108,7 @@ const AdminContextProvider = (props) => {
             toast.error(error.message)
         }
     }
+
 
     const getAllAppointments = async () => {
         try {
@@ -97,7 +165,10 @@ const AdminContextProvider = (props) => {
         appointmentList, setAppointmentList,
         getAllAppointments,
         cancelAppointment,
-        getDashData, dashData
+        getDashData, dashData, contactUsList,
+        getContactUsRequest,
+        updateContactStatus,
+        deleteContactRequest,
     }
 
     return (

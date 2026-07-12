@@ -5,6 +5,7 @@ import doctorModel from '../models/doctorModel.js'
 import jwt from 'jsonwebtoken'
 import appointmentModel from '../models/appointmentModel.js'
 import userModel from '../models/userModel.js'
+import contactModel from '../models/contactModel.js'
 
 
 
@@ -136,6 +137,72 @@ const appointmentCancelByAdmin = async (req, res) => {
 }
 
 
+// GET ALL CONTACT US REQUESTS
+const allContactUsRequest = async (req, res) => {
+    try {
+        
+        const contactUsList = await contactModel.find({}).sort({ createdAt: -1 });
+
+        res.json({
+            success: true,
+            contactUsList
+        });
+
+    } catch (error) {
+        res.json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
+
+// UPDATE CONTACT STATUS
+const updateContactStatus = async (req, res) => {
+    try {
+
+        const { contactId, status } = req.body;
+
+        await contactModel.findByIdAndUpdate(contactId, {
+            status
+        });
+
+        res.json({
+            success: true,
+            message: "Status updated successfully."
+        });
+
+    } catch (error) {
+        res.json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
+
+// DELETE CONTACT REQUEST
+const deleteContactRequest = async (req, res) => {
+    try {
+
+        const { contactId } = req.body;
+
+        await contactModel.findByIdAndDelete(contactId);
+
+        res.json({
+            success: true,
+            message: "Request deleted successfully."
+        });
+
+    } catch (error) {
+        res.json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
+
 //API FOR DASHBOARD
 const adminDashboard = async (req, res) => {
     try {
@@ -160,4 +227,4 @@ const adminDashboard = async (req, res) => {
 }
 
 
-export { addDoctor, loginAdmin, allDoctors, adminAllAppointmentList, appointmentCancelByAdmin, adminDashboard }
+export { addDoctor, loginAdmin, allDoctors, adminAllAppointmentList, appointmentCancelByAdmin, adminDashboard, allContactUsRequest, updateContactStatus, deleteContactRequest }

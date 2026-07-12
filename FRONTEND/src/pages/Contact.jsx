@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import { useContext, useState } from "react";
+import { AppContext } from "../context/AppContext";
 import { assets } from '../assets/assets'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import axios from "axios"
 import {
   HiOutlineLocationMarker, HiOutlinePhone, HiOutlineMail,
   HiOutlineClock, HiOutlineCheckCircle
@@ -12,22 +14,38 @@ const Contact = () => {
   const [loading, setLoading] = useState(false)
   const [sent, setSent] = useState(false)
 
+  const { submitContactRequest } = useContext(AppContext);
+
   const handleChange = e => setForm(p => ({ ...p, [e.target.name]: e.target.value }))
 
-  const handleSubmit = async e => {
-    e.preventDefault()
-    if (!form.name || !form.email || !form.message) return toast.error('Please fill all required fields')
-    setLoading(true)
-    try {
-      await new Promise(r => setTimeout(r, 800))
-      setSent(true)
-      toast.success('Message sent! We\'ll get back to you within 24 hours.')
-    } catch {
-      toast.error('Failed to send. Please try again.')
-    } finally {
-      setLoading(false)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!form.name || !form.email || !form.message) {
+        return toast.error("Please fill all required fields");
     }
-  }
+
+    setLoading(true);
+
+    const data = await submitContactRequest(form);
+
+    if (data.success) {
+        toast.success(data.message);
+        setSent(true);
+
+        setForm({
+            name: "",
+            email: "",
+            phone: "",
+            subject: "",
+            message: "",
+        });
+    } else {
+        toast.error(data.message);
+    }
+
+    setLoading(false);
+};
 
   const INFO = [
     { icon: HiOutlineLocationMarker, label: 'Our Wellness Hub', value: '234 Herbal Way, Green District\nBengaluru, India – 560001' },

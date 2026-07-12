@@ -49,11 +49,33 @@ const AppContextProvider = (props) => {
     }
 
 
+    const submitContactRequest = async (formData) => {
+    try {
+
+        const { data } = await axios.post(
+            backendUrl + "/api/user/contact-us",
+            formData
+        );
+
+        return data;
+
+    } catch (error) {
+        toast.error(error.message);
+
+        return {
+            success: false,
+            message: error.message
+        };
+    }
+};
+
+
     const value = {
         doctors, getDoctorsData,
         currencySymbol,
         token, setToken,
         backendUrl,
+        submitContactRequest,
         userData, setUserData,
         getUserProfileData
     }
