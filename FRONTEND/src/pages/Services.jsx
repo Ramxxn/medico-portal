@@ -1,68 +1,42 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { serviceData } from '../assets/assets'
+import { serviceCatalog } from '../data/serviceContent'
 import { HiOutlineArrowRight } from 'react-icons/hi'
-
-const ZenCard = ({ name, image, desc, speciality }) => (
-  <Link
-    to={`/doctors/${speciality}`}
-    onClick={() => scrollTo(0, 0)}
-    className='group flex flex-col items-center bg-white rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-pointer'
-  >
-    {/* Large rounded image area */}
-    <div className='w-full aspect-square bg-surface-2 flex items-center justify-center p-8 rounded-3xl overflow-hidden'>
-      <img
-        src={image}
-        alt={name}
-        className='w-full h-full object-contain group-hover:scale-105 transition-transform duration-500'
-        loading='lazy'
-      />
-    </div>
-
-    {/* Name + desc below */}
-    <div className='w-full px-5 py-4 text-center'>
-      <p className='font-semibold text-text-primary text-base leading-tight'>{name}</p>
-      <p className='text-xs text-text-muted mt-1 leading-relaxed'>{desc}</p>
-      <span className='inline-flex items-center gap-1 text-xs font-medium text-primary mt-3 group-hover:gap-2 transition-all'>
-        Find Practitioners <HiOutlineArrowRight className='w-3 h-3' />
-      </span>
-    </div>
-  </Link>
-)
 
 const Services = () => (
   <div className='page'>
-    <nav className='text-xs text-text-muted mb-6 flex items-center gap-2'>
+    <nav className='mb-6 flex items-center gap-2 text-xs text-tx-3'>
       <Link to='/' className='hover:text-primary transition-colors'>Home</Link>
       <span>/</span>
-      <span className='text-text-secondary'>Services</span>
+      <span className='text-tx-2'>Services</span>
     </nav>
 
-    <div className='text-center mb-12'>
+    <div className='text-center mb-10'>
       <p className='section-label mb-2'>What We Offer</p>
-      <h1 className='text-4xl font-bold text-text-primary'>Our Services</h1>
-      <p className='mt-4 text-text-secondary max-w-xl mx-auto'>
-        Comprehensive natural healthcare services delivered by certified practitioners — from ancient Ayurveda to modern physiotherapy.
-      </p>
+      <h1 className='text-3xl md:text-4xl font-semibold text-tx-1'>Care pathways designed to feel grounded and modern</h1>
+      <p className='mt-4 text-sm md:text-base text-tx-2 max-w-2xl mx-auto'>Explore our specialized services and discover a professional, welcoming path to support your health and wellbeing.</p>
     </div>
 
-    {/* Zen Cards Grid */}
-    <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 mb-16'>
-      {serviceData.map(s => <ZenCard key={s.speciality} {...s} />)}
+    <div className='grid gap-5 md:grid-cols-2 xl:grid-cols-3 mb-12'>
+      {serviceCatalog.map((service) => (
+        <Link key={service.slug} to={`/services/${service.slug}`} className='group overflow-hidden rounded border border-border bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover'>
+          <div className='overflow-hidden'>
+            <img src={service.image} alt={service.title} className='h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105' loading='lazy' />
+          </div>
+          <div className='p-6'>
+            <p className='text-xs font-semibold uppercase tracking-[0.24em] text-primary'>{service.speciality}</p>
+            <h2 className='mt-2 text-xl font-semibold text-tx-1'>{service.title}</h2>
+            <p className='mt-3 text-sm leading-7 text-tx-2'>{service.tagline}</p>
+            <div className='mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary'>Learn more <HiOutlineArrowRight className='w-4 h-4 transition-transform group-hover:translate-x-1' /></div>
+          </div>
+        </Link>
+      ))}
     </div>
 
-    {/* CTA */}
-    <div className='hero-gradient rounded-2xl p-10 text-center text-white'>
-      <h2 className='text-2xl font-bold mb-3'>Not Sure Which Service You Need?</h2>
-      <p className='text-white/70 mb-6 max-w-md mx-auto text-sm'>
-        Browse all our certified practitioners and read their profiles to find the best match for your health goals.
-      </p>
-      <Link
-        to='/doctors'
-        className='inline-flex items-center gap-2 bg-white text-gray-900 font-semibold px-8 py-3 rounded-lg text-sm hover:bg-gray-100 transition-colors'
-      >
-        Browse All Practitioners <HiOutlineArrowRight className='w-4 h-4' />
-      </Link>
+    <div className='rounded border border-border bg-surface-2 p-8 text-center'>
+      <h2 className='text-2xl font-semibold text-tx-1'>Need help choosing a service?</h2>
+      <p className='mt-3 text-sm text-tx-2 max-w-lg mx-auto'>Browse practitioners by speciality and book a consultation that matches your current health needs.</p>
+      <Link to='/doctors' className='mt-6 inline-flex items-center gap-2 rounded bg-primary px-6 py-3 text-sm font-semibold text-white'>Browse all practitioners <HiOutlineArrowRight className='w-4 h-4' /></Link>
     </div>
   </div>
 )

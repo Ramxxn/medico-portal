@@ -12,6 +12,7 @@ import MyAppointments from './pages/MyAppointments'
 import MyProfile from './pages/MyProfile'
 import Appointment from './pages/Appointment'
 import Services from './pages/Services'
+import ServiceDetail from './pages/ServiceDetail'
 import Articles from './pages/Articles'
 import FAQs from './pages/FAQs'
 import PrivacyPolicy from './pages/PrivacyPolicy'
@@ -34,6 +35,7 @@ function App() {
           <Route path='/my-appointments' element={<MyAppointments />} />
           <Route path='/my-profile' element={<MyProfile />} />
           <Route path='/services' element={<Services />} />
+          <Route path='/services/:slug' element={<ServiceDetail />} />
           <Route path='/articles' element={<Articles />} />
           <Route path='/faqs' element={<FAQs />} />
           <Route path='/privacy-policy' element={<PrivacyPolicy />} />

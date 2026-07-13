@@ -5,48 +5,48 @@
 
 * { font-family: 'Outfit', sans-serif; }
 
-body { background-color: #F2F9F1; color: #111827; }
+body { background-color: #f8f9fb; color: #111827; }
 
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: #f1f3f5; }
-::-webkit-scrollbar-thumb { background: #DDEEDF; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #8BC34A; }
+::-webkit-scrollbar-thumb { background: #d8e3dc; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #2f7d4f; }
 
 input:focus, select:focus, textarea:focus {
   outline: none;
-  border-color: #8BC34A !important;
-  box-shadow: 0 0 0 3px rgba(139, 195, 74, 0.15);
+  border-color: #2f7d4f !important;
+  box-shadow: 0 0 0 3px rgba(47, 125, 79, 0.12);
 }
 
 @layer components {
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2
-           bg-primary text-white text-sm font-semibold px-5 py-2.5 rounded-lg
+           bg-primary text-white text-sm font-semibold px-5 py-2.5 rounded
            hover:bg-primary-dk transition-colors duration-200
            disabled:opacity-50 disabled:cursor-not-allowed;
   }
   .btn-outline {
     @apply inline-flex items-center justify-center gap-2
-           border border-primary text-primary text-sm font-medium px-5 py-2.5 rounded-lg
+           border border-primary text-primary text-sm font-medium px-5 py-2.5 rounded
            hover:bg-bg-card transition-colors duration-200;
   }
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2
-           text-tx-3 text-sm font-medium px-4 py-2 rounded-lg
+           text-tx-3 text-sm font-medium px-4 py-2 rounded
            hover:bg-surface-3 transition-colors duration-200;
   }
   .btn-danger {
     @apply inline-flex items-center justify-center gap-2
-           border border-red-200 text-error text-sm font-medium px-4 py-2 rounded-lg
+           border border-red-200 text-error text-sm font-medium px-4 py-2 rounded
            hover:bg-error-bg transition-colors duration-200;
   }
-  .card { @apply bg-white rounded-xl border border-border shadow-card; }
+  .card { @apply bg-white rounded border border-border shadow-card; }
   .card-hover {
-    @apply bg-white rounded-xl border border-border shadow-card
+    @apply bg-white rounded border border-border shadow-card
            hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-200;
   }
   .input {
-    @apply w-full border border-border rounded-lg px-3.5 py-2.5 text-sm
+    @apply w-full border border-border rounded px-3.5 py-2.5 text-sm
            text-tx-1 bg-white placeholder:text-tx-4 transition-colors duration-150;
   }
   .label { @apply block text-xs font-medium text-tx-3 mb-1.5; }

@@ -4,7 +4,7 @@ import { AdminContext } from '../context/AdminContext'
 import { DoctorContext } from '../context/DoctorContext'
 import {
   HiOutlineHome, HiOutlineCalendar, HiOutlinePlusCircle,
-  HiOutlineUserGroup, HiOutlineUser, HiOutlineMail
+  HiOutlineUserGroup, HiOutlineUser, HiOutlineMail, HiOutlineDocumentText
 } from 'react-icons/hi'
 
 const ADMIN_LINKS = [
@@ -13,6 +13,7 @@ const ADMIN_LINKS = [
   { to: '/add-doctor', label: 'Add Practitioner', icon: HiOutlinePlusCircle },
   { to: '/doctor-list', label: 'Practitioners', icon: HiOutlineUserGroup },
   { to: '/contact-requests', label: 'Support Requests', icon: HiOutlineMail },
+  { to: '/blog-manager', label: 'Blog Manager', icon: HiOutlineDocumentText },
 ]
 
 const DOCTOR_LINKS = [

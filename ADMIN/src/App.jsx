@@ -14,6 +14,7 @@ import DoctorDashboard from './pages/Doctor/DoctorDashboard';
 import DoctorAppointment from './pages/Doctor/DoctorAppointment';
 import DoctorProfile from './pages/Doctor/DoctorProfile';
 import ContactUsList from './pages/Admin/ContactUsList';
+import BlogManager from './pages/Admin/BlogManager';
 
 const App = () => {
 
@@ -34,6 +35,7 @@ const App = () => {
           <Route path='/add-doctor' element={<AddDoctor />} />
           <Route path='/doctor-list' element={<DoctorsList />} />
           <Route path="/contact-requests" element={<ContactUsList />} />
+          <Route path='/blog-manager' element={<BlogManager />} />
 
           {/* DOCTORS ROUTESS */}
           <Route path='/doctor-dashboard' element={<DoctorDashboard />} />
