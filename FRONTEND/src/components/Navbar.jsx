@@ -84,7 +84,7 @@ const Navbar = () => {
             <img className='h-8 w-auto' src={assets.logo} alt='ICRB' />
             <button onClick={() => setShowMenu(false)} className='p-2 rounded hover:bg-surface-3'><HiOutlineX className='w-5 h-5 text-tx-3' /></button>
           </div>
-          <nav className='px-3 py-4 flex flex-col gap-0.5'>
+          <nav className='px-3 py-4 flex flex-col bg-white gap-0.5'>
             {NAV_LINKS.map(({ to, label }) => (
               <NavLink key={to} to={to} onClick={() => setShowMenu(false)}
                 className={({ isActive }) =>

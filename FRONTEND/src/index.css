@@ -3,12 +3,36 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Base ───────────────────────────────────────────────── */
-* { font-family: 'Outfit', sans-serif; }
+/* Global Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Prevent horizontal scrolling */
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
 
 body {
   background-color: #f8f9fb;
   color: #111827;
+}
+
+/* Responsive media */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 
 ::-webkit-scrollbar { width: 4px; height: 4px; }
