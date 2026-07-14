@@ -12,7 +12,7 @@ const SpecialityMenu = () => (
       </p>
     </div>
 
-    <div className='flex gap-5 justify-start md:justify-center overflow-x-auto pb-3 scrollbar-hide px-1'>
+    <div className='flex gap-8 justify-start md:justify-center overflow-x-auto pb-3 scrollbar-hide px-1'>
       {specialityData.map((item, i) => (
         <Link
           key={i}
@@ -20,8 +20,8 @@ const SpecialityMenu = () => (
           onClick={() => scrollTo(0, 0)}
           className='flex flex-col items-center gap-3 flex-shrink-0 group'
         >
-          <div className='w-20 h-20 rounded-2xl bg-white border border-border shadow-card flex items-center justify-center group-hover:border-primary group-hover:shadow-card-hover transition-all duration-200'>
-            <img className='w-10 h-10 object-contain' src={item.image} alt={item.speciality} />
+          <div className='w-32 h-32 rounded-full p-4 bg-white border border-border shadow-card flex items-center justify-center group-hover:border-primary group-hover:shadow-card-hover transition-all duration-200'>
+            <img className='w-24 h-24 object-contain' src={item.image} alt={item.speciality} />
           </div>
           <span className='text-xs font-medium text-text-secondary group-hover:text-primary transition-colors text-center max-w-[80px] leading-tight'>
             {item.speciality}

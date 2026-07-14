@@ -23,17 +23,6 @@ const Home = () => (
   <div className='page'>
     <Header />
 
-    {/* Stats */}
-    <div className='grid grid-cols-2 md:grid-cols-4 gap-4 my-10'>
-      {STATS.map(({ icon: Icon, value, label }) => (
-        <div key={label} className='card p-5 text-center'>
-          <Icon className='w-6 h-6 text-primary mx-auto mb-2' />
-          <p className='text-2xl font-bold text-text-primary'>{value}</p>
-          <p className='text-xs text-text-muted mt-0.5'>{label}</p>
-        </div>
-      ))}
-    </div>
-
     <SpecialityMenu />
     <TopDoctors />
 
