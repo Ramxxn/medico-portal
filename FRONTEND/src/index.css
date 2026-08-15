@@ -75,16 +75,16 @@ input:focus, select:focus, textarea:focus {
 
   /* ── Cards */
   .card {
-    @apply bg-white rounded border border-border shadow-card;
+    @apply bg-white rounded-lg border border-border shadow-card;
   }
   .card-hover {
-    @apply bg-white rounded border border-border shadow-card
+    @apply bg-white rounded-lg border border-border shadow-card
            hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-200;
   }
 
   /* ── Form */
   .input {
-    @apply w-full border border-border rounded px-3.5 py-2.5 text-sm
+    @apply w-full border border-border rounded-lg px-3.5 py-2.5 text-sm
            text-tx-1 bg-white placeholder:text-tx-4 transition-colors duration-150;
   }
   .label {

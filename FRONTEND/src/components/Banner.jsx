@@ -6,7 +6,7 @@ import { HiOutlineArrowRight } from 'react-icons/hi'
 const Banner = () => {
   const navigate = useNavigate()
   return (
-    <section className='my-16 overflow-hidden rounded border border-border bg-white shadow-card'>
+    <section className='my-16 overflow-hidden rounded-lg border border-border bg-white shadow-card'>
       <div className='flex flex-col md:flex-row items-center'>
         <div className='md:w-3/5 px-8 md:px-14 lg:px-20 py-14 md:py-16'>
           <p className='text-primary text-sm font-semibold mb-3 uppercase tracking-[0.24em]'>Ready to start?</p>
@@ -19,13 +19,13 @@ const Banner = () => {
           <div className='flex flex-wrap gap-3 mt-8'>
             <button
               onClick={() => { navigate('/login'); scrollTo(0, 0) }}
-              className='inline-flex items-center gap-2 bg-primary text-white font-semibold px-6 py-3 rounded text-sm hover:bg-primary-dk transition-colors'
+              className='inline-flex items-center gap-2 bg-primary text-white font-semibold px-6 py-3 rounded-lg text-sm hover:bg-primary-dk transition-colors'
             >
               Create Free Account <HiOutlineArrowRight className='w-4 h-4' />
             </button>
             <button
               onClick={() => { navigate('/doctors'); scrollTo(0, 0) }}
-              className='border border-primary text-primary font-medium px-6 py-3 rounded text-sm hover:bg-surface-2 transition-colors'
+              className='border border-primary text-primary font-medium px-6 py-3 rounded-lg text-sm hover:bg-surface-2 transition-colors'
             >
               Browse Practitioners
             </button>

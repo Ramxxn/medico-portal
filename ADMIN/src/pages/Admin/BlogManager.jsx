@@ -66,7 +66,7 @@ const BlogManager = () => {
 
   return (
     <div className='flex-1 bg-[#f7f8fc] min-h-screen p-4 md:p-6'>
-      <div className='rounded border border-border bg-white p-4 md:p-6 shadow-sm'>
+      <div className='rounded-lg border border-border bg-white p-4 md:p-6 shadow-sm'>
         <div className='flex flex-col md:flex-row md:items-end md:justify-between gap-4'>
           <div>
             <p className='text-xs font-semibold uppercase tracking-[0.2em] text-primary'>Blog management</p>
@@ -77,7 +77,7 @@ const BlogManager = () => {
         </div>
 
         <form onSubmit={handleSubmit} className='mt-6 grid gap-4 lg:grid-cols-[1.1fr_0.9fr]'>
-          <div className='space-y-4 rounded border border-border p-4'>
+          <div className='space-y-4 rounded-lg border border-border p-4'>
             <div className='grid md:grid-cols-2 gap-4'>
               <label className='text-sm'>
                 <span className='mb-1 block text-tx-3'>Title</span>
@@ -105,7 +105,7 @@ const BlogManager = () => {
             </label>
           </div>
 
-          <div className='space-y-4 rounded border border-border p-4'>
+          <div className='space-y-4 rounded-lg border border-border p-4'>
             <div className='grid md:grid-cols-2 gap-4'>
               <label className='text-sm'>
                 <span className='mb-1 block text-tx-3'>Author</span>
@@ -137,7 +137,7 @@ const BlogManager = () => {
 
         <div className='mt-8 space-y-3'>
           {blogs.map((blog) => (
-            <div key={blog.id} className='flex flex-col md:flex-row md:items-center md:justify-between rounded border border-border bg-surface-2 p-4 gap-3'>
+            <div key={blog.id} className='flex flex-col md:flex-row md:items-center md:justify-between rounded-lg border border-border bg-surface-2 p-4 gap-3'>
               <div>
                 <div className='flex flex-wrap items-center gap-2'>
                   <h2 className='font-semibold text-tx-1'>{blog.title}</h2>
@@ -163,12 +163,12 @@ const BlogManager = () => {
 
       {previewOpen && (
         <div className='fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4'>
-          <div className='w-full max-w-2xl rounded border border-border bg-white p-6 shadow-xl'>
+          <div className='w-full max-w-2xl rounded-lg border border-border bg-white p-6 shadow-xl'>
             <div className='flex items-center justify-between'>
               <h3 className='text-xl font-semibold text-tx-1'>Preview</h3>
               <button onClick={() => setPreviewOpen(false)} className='btn-ghost'>Close</button>
             </div>
-            <div className='mt-5 rounded border border-border bg-surface-2 p-5'>
+            <div className='mt-5 rounded-lg border border-border bg-surface-2 p-5'>
               <p className='text-xs font-semibold uppercase tracking-[0.2em] text-primary'>{form.category || 'Category'}</p>
               <h4 className='mt-2 text-2xl font-semibold text-tx-1'>{form.title || 'Blog title'}</h4>
               <p className='mt-3 text-sm text-tx-2'>{form.excerpt || 'Your short description will appear here.'}</p>
